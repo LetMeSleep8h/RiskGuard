@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiskGuard - Cyber Risk Assessment</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: white;
+            text-align: center;
+            overflow-x: hidden;
+            background: linear-gradient(-45deg, #07152f, #0f3b73, #3b1d68, #0f172a);
+            background-size: 400% 400%;
+            animation: gradientMove 12s ease infinite;
+            padding: 40px 20px;
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            max-width: 950px;
+            margin: auto;
+        }
+
+        .logo {
+            font-size: 58px;
+            margin-bottom: 8px;
+            animation: floatShield 3s ease-in-out infinite;
+        }
+
+        @keyframes floatShield {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .tagline {
+            display: inline-block;
+            padding: 8px 18px;
+            border: 1px solid #38bdf8;
+            border-radius: 30px;
+            color: #7dd3fc;
+            background: #38bdf80a;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-size: 52px;
+            margin: 10px 0;
+            color: #7dd3fc;
+            text-shadow: 0 0 20px #38bdf855;
+        }
+
+        .subtitle {
+            font-size: 21px;
+            color: #dbeafe;
+            margin-bottom: 15px;
+        }
+
+        .intro {
+            color: #cbd5e1;
+            font-size: 17px;
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 17px;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px #00000040;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px #38bdf866;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 45px;
+        }
+
+        .feature-card {
+            background: #ffffff12;
+            border: 1px solid #ffffff22;
+            border-radius: 18px;
+            padding: 22px;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 10px 30px #00000030;
+            transition: 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            border-color: #38bdf8;
+        }
+
+        .feature-icon {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .feature-card h3 {
+            color: #7dd3fc;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .card {
+            display: none;
+            margin: 40px auto;
+            padding: 35px;
+            max-width: 560px;
+            border: 1px solid #ffffff25;
+            border-radius: 22px;
+            background: #ffffff12;
+            backdrop-filter: blur(18px);
+            box-shadow: 0 15px 45px #00000045;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card h2 {
+            color: #7dd3fc;
+            font-size: 30px;
+            margin-top: 0;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ffffff30;
+            border-radius: 10px;
+            background: #0f172acc;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 10px #38bdf844;
+        }
+
+        select option {
+            background: #111827;
+            color: white;
+        }
+
+        .result-score {
+            font-size: 42px;
+            font-weight: bold;
+            color: #86efac;
+            margin: 20px 0 10px;
+        }
+
+        .risk-level {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        #recommendations {
+            text-align: left;
+            padding-left: 22px;
+            line-height: 1.8;
+            color: #e2e8f0;
+        }
+
+        #recommendations li {
+            margin-bottom: 8px;
+        }
+
+        .footer {
+            margin-top: 55px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        @media (max-width: 750px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 38px;
+            }
+
+            .card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">🛡️</div>
+
+    <div class="tagline">
+        CYBERSECURITY • RISK INTELLIGENCE
+    </div>
+
+    <h1>Welcome to RiskGuard</h1>
+
+    <p class="subtitle">
+        Cyber Risk Assessment Dashboard for Businesses
+    </p>
+
+    <p class="intro">
+        Identify cybersecurity weaknesses, understand your risk level,
+        and receive practical recommendations to help protect your business.
+    </p>
+
+    <button onclick="showForm()">
+        🔍 Start Risk Assessment
+    </button>
+
+    <div class="features">
+
+        <div class="feature-card">
+            <div class="feature-icon">🧠</div>
+            <h3>Smart Risk Analysis</h3>
+            <p>
+                Evaluate important security practices and identify areas that need improvement.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Instant Risk Score</h3>
+            <p>
+                Receive an easy-to-understand score and risk level after your assessment.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🔐</div>
+            <h3>Actionable Advice</h3>
+            <p>
+                Get practical recommendations that help strengthen your cybersecurity posture.
+            </p>
+        </div>
+
+    </div>
+
+    <div id="assessmentForm" class="card">
+
+        <h2>🛡️ Risk Assessment</h2>
+
+        <p>Answer these questions about your business.</p>
+
+        <input
+                type="text"
+                id="businessName"
+                placeholder="Enter Business Name"
+        >
+
+        <select id="businessSize">
+            <option value="">Select Business Size</option>
+            <option value="Small">Small</option>
+            <option value="Medium">Medium</option>
+            <option value="Large">Large</option>
+        </select>
+
+        <select id="antivirus">
+            <option value="">Do you use antivirus software?</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <select id="twoFactor">
+            <option value="">Do you use two-factor authentication?</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <select id="backups">
+            <option value="">Do you regularly back up important data?</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <select id="updates">
+            <option value="">Do you regularly update software and systems?</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <select id="phishingTraining">
+            <option value="">Do employees receive phishing awareness training?</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <br><br>
+
+        <button onclick="submitAssessment()">
+            🚀 Submit Assessment
+        </button>
+
+    </div>
+
+    <div id="result" class="card">
+
+        <h2>📊 Risk Assessment Result</h2>
+
+        <p id="businessResult"></p>
+
+        <div id="riskScore" class="result-score"></div>
+
+        <p id="riskLevel" class="risk-level"></p>
+
+        <h3>🔐 Recommendations</h3>
+
+        <ul id="recommendations"></ul>
+
+        <br>
+
+        <button onclick="location.reload()">
+            🔄 Start New Assessment
+        </button>
+
+    </div>
+
+    <div class="footer">
+        © 2026 RiskGuard | Protecting Businesses, Securing Futures
+    </div>
+
+</div>
+
+<script>
+
+    function showForm() {
+
+        document.getElementById("assessmentForm").style.display = "block";
+
+        document.getElementById("assessmentForm").scrollIntoView({
+            behavior: "smooth"
+        });
+    }
+
+    function submitAssessment() {
+
+        const businessName =
+            document.getElementById("businessName").value.trim();
+
+        const businessSize =
+            document.getElementById("businessSize").value;
+
+        const antivirus =
+            document.getElementById("antivirus").value;
+
+        const twoFactor =
+            document.getElementById("twoFactor").value;
+
+        const backups =
+            document.getElementById("backups").value;
+
+        const updates =
+            document.getElementById("updates").value;
+
+        const phishingTraining =
+            document.getElementById("phishingTraining").value;
+
+        if (
+            businessName === "" ||
+            businessSize === "" ||
+            antivirus === "" ||
+            twoFactor === "" ||
+            backups === "" ||
+            updates === "" ||
+            phishingTraining === ""
+        ) {
+            alert("Please answer all assessment questions.");
+            return;
+        }
+
+        let score = 0;
+        let recommendations = [];
+
+        if (antivirus === "No") {
+            score += 20;
+            recommendations.push(
+                "Install reliable antivirus or endpoint protection software."
+            );
+        }
+
+        if (twoFactor === "No") {
+            score += 20;
+            recommendations.push(
+                "Enable two-factor authentication on important accounts."
+            );
+        }
+
+        if (backups === "No") {
+            score += 20;
+            recommendations.push(
+                "Create regular and secure backups of important business data."
+            );
+        }
+
+        if (updates === "No") {
+            score += 20;
+            recommendations.push(
+                "Keep operating systems, applications, and devices updated."
+            );
+        }
+
+        if (phishingTraining === "No") {
+            score += 20;
+            recommendations.push(
+                "Provide employees with phishing and cybersecurity awareness training."
+            );
+        }
+
+        if (recommendations.length === 0) {
+            recommendations.push(
+                "Your current security practices look strong. Continue monitoring and reviewing them regularly."
+            );
+        }
+
+        let riskLevel;
+
+        if (score >= 60) {
+            riskLevel = "High Risk";
+        } else if (score >= 30) {
+            riskLevel = "Medium Risk";
+        } else {
+            riskLevel = "Low Risk";
+        }
+
+        document.getElementById("assessmentForm").style.display = "none";
+        document.getElementById("result").style.display = "block";
+
+        document.getElementById("businessResult").innerText =
+            "Business: " + businessName + " • " + businessSize;
+
+        document.getElementById("riskScore").innerText =
+            score + " / 100";
+
+        const riskLevelElement =
+            document.getElementById("riskLevel");
+
+        riskLevelElement.innerText =
+            "Risk Level: " + riskLevel;
+
+        if (riskLevel === "High Risk") {
+            riskLevelElement.style.background = "#ef444425";
+            riskLevelElement.style.color = "#fca5a5";
+        } else if (riskLevel === "Medium Risk") {
+            riskLevelElement.style.background = "#f59e0b25";
+            riskLevelElement.style.color = "#fde68a";
+        } else {
+            riskLevelElement.style.background = "#22c55e25";
+            riskLevelElement.style.color = "#86efac";
+        }
+
+        const recommendationList =
+            document.getElementById("recommendations");
+
+        recommendationList.innerHTML = "";
+
+        recommendations.forEach(function(recommendation) {
+
+            const listItem =
+                document.createElement("li");
+
+            listItem.innerText =
+                recommendation;
+
+            recommendationList.appendChild(listItem);
+        });
+
+        document.getElementById("result").scrollIntoView({
+            behavior: "smooth"
+        });
+    }
+
+</script>
+
+</body>
+</html>
