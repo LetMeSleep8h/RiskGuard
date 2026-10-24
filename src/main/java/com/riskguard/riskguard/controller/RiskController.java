@@ -11,3 +11,4 @@ public class RiskController {
         return "RiskGuard API is working!";
     }
 }
+
